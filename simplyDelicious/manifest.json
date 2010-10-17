@@ -1,0 +1,23 @@
+{
+  "name": "Simply Delicious",
+  "version": "1.0",
+  "description": "Emulate the Delicious bookmarklet with an extension button.",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "background_page": "background.html",
+  "permissions": [ 
+    "tabs" 
+  ],
+  "browser_action": {
+    "default_icon": "icon19.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://www.delicious.com/save*"],
+      "js": ["contentscript.js"]
+    }
+  ]
+}

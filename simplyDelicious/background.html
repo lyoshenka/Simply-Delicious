@@ -1,0 +1,33 @@
+<html><script>
+chrome.browserAction.onClicked.addListener(function(tab) {
+  chrome.tabs.getSelected(null, function(tab) {
+    w = window.open('http://delicious.com/save?url='+encodeURIComponent(tab.url)+'&title='+encodeURIComponent(tab.title)+
+    '&v=5&noui=1&jump=close','deliciousuiv5','location=yes,links=no,scrollbars=no,toolbar=no,width=550,height=550');
+  });
+});
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  if(changeInfo.status == "loading" && (tab.url == "http://www.delicious.com/save" || tab.url == "http://www.delicious.com/save?cancel=1&jump=close")) {
+    chrome.tabs.remove(tabId);
+  }
+});
+</script></html>
+
+
+
+/*
+
+if (window.getSelection)
+    {
+        txt = window.getSelection();
+    }
+    else if (document.getSelection)
+    {
+        txt = document.getSelection();
+    }
+    else if (document.selection)
+    {
+        txt = document.selection.createRange().text;
+    }
+
+*/
