@@ -1,14 +1,26 @@
 <html><script>
 chrome.browserAction.onClicked.addListener(function(tab) {
   chrome.tabs.getSelected(null, function(tab) {
-    w = window.open('http://delicious.com/save?url='+encodeURIComponent(tab.url)+'&title='+encodeURIComponent(tab.title)+
-    '&v=5&noui=1&jump=close','deliciousuiv5','location=yes,links=no,scrollbars=no,toolbar=no,width=550,height=550');
-  });
-});
+    url = 'http://delicious.com/save?url='+encodeURIComponent(tab.url)+'&title='+encodeURIComponent(tab.title)+'&v=5&noui=1&jump=close';
+//    w = window.open(url,'deliciousuiv5','location=yes,links=no,scrollbars=no,toolbar=no,width=550,height=550');
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  if(changeInfo.status == "loading" && (tab.url == "http://www.delicious.com/save" || tab.url == "http://www.delicious.com/save?cancel=1&jump=close")) {
-    chrome.tabs.remove(tabId);
-  }
+    chrome.windows.create({url: url, width: 550, height: 550, type: 'popup'}, function(window) {
+      chrome.windows.getAll({populate: true}, function(windows) {
+        for (i = 0; i < windows.length; i++)
+        {
+	  if (windows[i].id == window.id)
+          {
+            chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+              var id = windows[i].tabs[0].id;
+              if(tabId == id && changeInfo.status == "loading" && (changeInfo.url == "http://www.delicious.com/save" || changeInfo.url == "http://www.delicious.com/save?cancel=1&jump=close")) {
+                chrome.tabs.remove(tabId);
+              }
+            });
+            return;
+          }
+        }
+      });
+    });
+  });
 });
 </script></html>

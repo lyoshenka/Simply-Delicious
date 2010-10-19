@@ -1,7 +1,4 @@
 add ability to insert highlighted text into notes field
 add options page to turn that option on/off
 
-make sure that extension doesn't close windows that it shouldn't (like if i go to delicious.com/save without using the popup)
-it should probably track ids of windows opened via popup and only close those windows/tabs.
-
 pay $5 to host app with google
