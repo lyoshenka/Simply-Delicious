@@ -1,18 +1,29 @@
 <html><script>
-chrome.browserAction.onClicked.addListener(function(tab) {
-  chrome.tabs.getSelected(null, function(tab) {
-    url = 'http://delicious.com/save?url='+encodeURIComponent(tab.url)+'&title='+encodeURIComponent(tab.title)+'&v=5&noui=1&jump=close';
-//    w = window.open(url,'deliciousuiv5','location=yes,links=no,scrollbars=no,toolbar=no,width=550,height=550');
+chrome.browserAction.onClicked.addListener(function(tab)
+{
+  url = 'http://delicious.com/save?url='+encodeURIComponent(tab.url)+'&title='+encodeURIComponent(tab.title)+'&v=5&noui=1&jump=close';
+//  w = window.open(url,'deliciousuiv5','location=yes,links=no,scrollbars=no,toolbar=no,width=550,height=550');
 
-    chrome.windows.create({url: url, width: 550, height: 550, type: 'popup'}, function(window) {
-      chrome.windows.getAll({populate: true}, function(windows) {
+  chrome.tabs.sendRequest(tab.id, {method: "getSelection"}, function (response)
+  {
+    if (response.data)
+    {
+      url += '&notes='+encodeURIComponent(response.data);
+    }
+
+    chrome.windows.create({url: url, width: 550, height: 550, type: 'popup'}, function(window) 
+    {
+      chrome.windows.getAll({populate: true}, function(windows)
+      {
         for (i = 0; i < windows.length; i++)
         {
-	  if (windows[i].id == window.id)
+          if (windows[i].id == window.id)
           {
-            chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+            chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab)
+            {
               var id = windows[i].tabs[0].id;
-              if(tabId == id && changeInfo.status == "loading" && (changeInfo.url == "http://www.delicious.com/save" || changeInfo.url == "http://www.delicious.com/save?cancel=1&jump=close")) {
+              if(tabId == id && changeInfo.status == "loading" && (changeInfo.url == "http://www.delicious.com/save" || changeInfo.url == "http://www.delicious.com/save?cancel=1&jump=close")) 
+              {
                 chrome.tabs.remove(tabId);
               }
             });
