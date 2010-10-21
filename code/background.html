@@ -6,7 +6,7 @@ chrome.browserAction.onClicked.addListener(function(tab)
 
   chrome.tabs.sendRequest(tab.id, {method: "getSelection"}, function (response)
   {
-    if (response.data)
+    if (localStorage["use_selected_for_notes"] == 'yes' && response.data)
     {
       url += '&notes='+encodeURIComponent(response.data);
     }

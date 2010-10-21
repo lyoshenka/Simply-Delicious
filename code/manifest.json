@@ -2,6 +2,7 @@
   "name": "Simply Delicious",
   "version": "1.0",
   "description": "Emulate the Delicious bookmarklet with an extension button.",
+  "options_page": "options.html",
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
