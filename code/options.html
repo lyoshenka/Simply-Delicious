@@ -1,36 +1,36 @@
 <html>
-<head><title>Simply Delicious Options</title></head>
-<script type="text/javascript">
+  <head><title>Simply Delicious Options</title>
+    <script type="text/javascript">
 
-// Saves options to localStorage.
-function save_options()
-{
-  var checkbox = document.getElementById("use_selected_for_notes");
-  localStorage["use_selected_for_notes"] = checkbox.checked ? 'yes' : 'no';
+      // Saves options to localStorage.
+      function save_options()
+      {
+        var checkbox = document.getElementById("use_selected_for_notes");
+        localStorage["use_selected_for_notes"] = checkbox.checked ? 'yes' : 'no';
 
-  var status = document.getElementById("status");
-  status.innerHTML = "Options Saved.";
-  setTimeout(function() {
-    status.innerHTML = "";
-  }, 750);
-}
+        var status = document.getElementById("status");
+        status.innerHTML = "Options Saved.";
+        setTimeout(function() {
+          status.innerHTML = "";
+        }, 750);
+      }
 
-// Restores select box state to saved value from localStorage.
-function restore_options()
-{
-  var checkbox = document.getElementById("use_selected_for_notes");
-  checkbox.checked = localStorage["use_selected_for_notes"] == 'yes' ? true : false;
-}
+      // Restores select box state to saved value from localStorage.
+      function restore_options()
+      {
+        var checkbox = document.getElementById("use_selected_for_notes");
+        checkbox.checked = localStorage["use_selected_for_notes"] == 'yes' ? true : false;
+      }
 
-</script>
+    </script>
+  </head>
+  <body onload="restore_options()">
 
-<body onload="restore_options()">
+    <div id="status"></div>
 
-<div id="status"></div>
+    Automatically insert highlighted text into the 'notes' field? <input type=checkbox id="use_selected_for_notes"/>
 
-Automatically insert highlighted text into the 'notes' field? <input type=checkbox id="use_selected_for_notes"/>
-
-<br>
-<button onclick="save_options()">Save</button>
-</body>
+    <br>
+    <button onclick="save_options()">Save</button>
+  </body>
 </html>
